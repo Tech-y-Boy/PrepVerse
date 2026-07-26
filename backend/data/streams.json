@@ -1,0 +1,6 @@
+[
+  { "id": "pcm", "name": "Science (PCM)", "description": "Physics, Chemistry, Maths — for engineering, tech, research paths." },
+  { "id": "pcb", "name": "Science (PCB)", "description": "Physics, Chemistry, Biology — for medical and life sciences paths." },
+  { "id": "commerce", "name": "Commerce", "description": "Accounts, Business Studies, Economics — for business/finance paths." },
+  { "id": "humanities", "name": "Humanities", "description": "History, Political Science, Psychology — for social sciences, civil services, law." }
+]
