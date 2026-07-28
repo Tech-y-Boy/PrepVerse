@@ -3,7 +3,9 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5173', 'https://prepverse-phi.vercel.app'],
+}));
 app.use(express.json());
 
 app.get('/api/health', (req, res) => {
