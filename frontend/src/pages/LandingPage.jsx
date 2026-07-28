@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Compass, ClipboardCheck, Map, ArrowRight } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
@@ -14,34 +15,14 @@ function LandingPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="max-w-5xl mx-auto px-6 pt-20 pb-16 text-center">
-        <Badge className="mb-5">🎓 For Class 11 & College Students</Badge>
-        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight dark:text-white mb-5">
-          Find your career path <br className="hidden md:block" />
-          <span className="text-primary-600">before you get lost</span>
-        </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-10">
-          Take a smart assessment, discover careers matched to you, and get a
-          step-by-step roadmap — whether you're picking a stream or planning
-          life after college.
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button
-            className="px-6 py-3 flex items-center gap-2"
-            onClick={() => navigate('/signup?role=class11')}
-          >
-            I'm in Class 11 <ArrowRight size={16} />
-          </Button>
-          <Button
-            variant="outline"
-            className="px-6 py-3 flex items-center gap-2"
-            onClick={() => navigate('/signup?role=college')}
-          >
-            I'm in College <ArrowRight size={16} />
-          </Button>
-        </div>
-      </section>
+      <motion.section
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5 }}
+  className="max-w-5xl mx-auto px-6 pt-20 pb-16 text-center"
+>
+  {/* baaki content wahi rehne do jo pehle se hai */}
+</motion.section>
 
       {/* How it works */}
       <section id="how-it-works" className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-3 gap-6">

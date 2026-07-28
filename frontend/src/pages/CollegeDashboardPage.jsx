@@ -10,15 +10,16 @@ import { getAllCareers } from '../services/careerService';
 function CollegeDashboardPage() {
   const [allCareers, setAllCareers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCourse, setSelectedCourse] = useState('');
-
-  useEffect(() => {
+  const [selectedCourse, setSelectedCourse] = useState(() => {
     const savedProfile = localStorage.getItem('collegeProfile');
     if (savedProfile) {
       const { course } = JSON.parse(savedProfile);
-      if (course) setSelectedCourse(course);
+      return course || '';
     }
+    return '';
+  });
 
+  useEffect(() => {
     getAllCareers()
       .then(setAllCareers)
       .catch(() => toast.error('Failed to load careers'))
