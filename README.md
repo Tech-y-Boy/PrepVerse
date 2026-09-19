@@ -103,10 +103,4 @@ VITE_API_BASE_URL=http://localhost:5000/api
 
 ---
 
-## 👥 Team
-
-Built in 12 hours for [Hackathon Name] by [Your Team Name].
-
----
-
 *PrepVerse — because the right path shouldn't be a guess.*
