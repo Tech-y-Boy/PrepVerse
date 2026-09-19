@@ -29,15 +29,18 @@ function Navbar() {
         <div className="flex items-center gap-3">
           <ThemeToggle />
           {isAuthenticated ? (
-            <>
-              <span className="hidden sm:inline text-sm text-gray-600 dark:text-gray-300">
-                Hi, {user?.name?.split(' ')[0] || 'there'}
-              </span>
-              <Button variant="ghost" onClick={handleLogout} className="flex items-center gap-1.5">
-                <LogOut size={14} /> Logout
-              </Button>
-            </>
-          ) : (
+  <>
+    <button
+      onClick={() => navigate('/profile')}
+      className="hidden sm:flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-300 hover:text-primary-600"
+    >
+      Hi, {user?.name?.split(' ')[0] || 'there'}
+    </button>
+    <Button variant="ghost" onClick={handleLogout} className="flex items-center gap-1.5">
+      <LogOut size={14} /> Logout
+    </Button>
+  </>
+) : (
             <>
               <Button variant="ghost" onClick={() => navigate('/login')}>Log in</Button>
               <Button onClick={() => navigate('/signup')}>Sign up</Button>

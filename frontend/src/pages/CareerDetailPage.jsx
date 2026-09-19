@@ -1,3 +1,6 @@
+import SalaryChart from '../components/career/SalaryChart';
+import { Bookmark, BookmarkCheck } from 'lucide-react';
+import { useAuthStore } from '../store/useAuthStore'; 
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, TrendingUp, Heart, IndianRupee } from 'lucide-react';
@@ -11,9 +14,12 @@ import LoadingSpinner from '../components/common/LoadingSpinner';
 import ErrorState from '../components/common/ErrorState';
 import { getCareerById } from '../services/careerService';
 import { getRoadmapSteps } from '../constants/roadmapSteps';
+import { motion, AnimatePresence } from 'framer-motion';
 
 function CareerDetailPage() {
   const { careerId } = useParams();
+  const { bookmarks, toggleBookmark } = useAuthStore();
+  const isBookmarked = bookmarks.includes(careerId);
   const navigate = useNavigate();
   const [career, setCareer] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -59,7 +65,19 @@ function CareerDetailPage() {
         {/* Header */}
         <div className="mb-8">
           <Badge className="mb-3">{career.stream}</Badge>
-          <h1 className="text-3xl font-bold dark:text-white mb-3">{career.title}</h1>
+          <div className="flex items-center justify-between mb-3">
+  <h1 className="text-3xl font-bold dark:text-white">{career.title}</h1>
+  <button
+    onClick={() => toggleBookmark(career.id)}
+    className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-surface-darkAlt"
+  >
+    {isBookmarked ? (
+      <BookmarkCheck size={22} className="text-primary-600" />
+    ) : (
+      <Bookmark size={22} className="text-gray-400" />
+    )}
+  </button>
+</div>
           <p className="text-gray-600 dark:text-gray-400 mb-5">{career.description}</p>
 
           <div className="flex flex-wrap gap-4">
@@ -80,30 +98,42 @@ function CareerDetailPage() {
 
         <Tabs tabs={['Overview', 'Roadmap', 'Planner']} active={activeTab} onChange={setActiveTab} />
 
-        {activeTab === 'Overview' && (
-          <div className="flex flex-col gap-6">
-            <div>
-              <h3 className="font-semibold dark:text-white mb-2">Required Skills</h3>
-              <div className="flex flex-wrap gap-2">
-                {career.skills?.map((skill) => (
-                  <Badge key={skill}>{skill}</Badge>
-                ))}
-              </div>
-            </div>
-            <div>
-              <h3 className="font-semibold dark:text-white mb-2">Entrance Exams</h3>
-              <div className="flex flex-wrap gap-2">
-                {career.entranceExams?.map((exam) => (
-                  <Badge key={exam} color="warning">{exam}</Badge>
-                ))}
-              </div>
-            </div>
+<AnimatePresence mode="wait">
+  <motion.div
+    key={activeTab}
+    initial={{ opacity: 0, y: 8 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -8 }}
+    transition={{ duration: 0.2 }}
+  >
+    {activeTab === 'Overview' && (
+      <div className="flex flex-col gap-6">
+        <div>
+          <h3 className="font-semibold dark:text-white mb-2">Required Skills</h3>
+          <div className="flex flex-wrap gap-2">
+            {career.skills?.map((skill) => (
+              <Badge key={skill}>{skill}</Badge>
+            ))}
           </div>
-        )}
+        </div>
+        <div>
+          <h3 className="font-semibold dark:text-white mb-2">Entrance Exams</h3>
+          <div className="flex flex-wrap gap-2">
+            {career.entranceExams?.map((exam) => (
+              <Badge key={exam} color="warning">{exam}</Badge>
+            ))}
+          </div>
+        </div>
+        <SalaryChart career={career} />
+      </div>
+    )}
 
-        {activeTab === 'Roadmap' && <RoadmapTimeline steps={getRoadmapSteps(career)} />}
+    {activeTab === 'Roadmap' && <RoadmapTimeline steps={getRoadmapSteps(career)} />}
 
-        {activeTab === 'Planner' && <PlannerBoard careerId={career.id} />}
+    {activeTab === 'Planner' && <PlannerBoard careerId={career.id} />}
+  </motion.div>
+</AnimatePresence>
+
       </div>
 
       <Footer />
